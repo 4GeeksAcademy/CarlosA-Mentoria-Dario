@@ -1,18 +1,6 @@
 export const initialStore=()=>{
   return{
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
+    contactos: []
   }
 }
 
@@ -26,7 +14,22 @@ export default function storeReducer(store, action = {}) {
         ...store,
         todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
       };
+
+    case 'add_contact':
+      return {
+        ...store,
+        contactos: action.payload
+      }
+
+    case 'set_slug':
+      // Store the slug in local storage for persistence
+      localStorage.setItem('slug', action.payload);
+      return {
+       ...store,
+        slug: action.payload
+      }
+    case 'delete_contact':
     default:
       throw Error('Unknown action.');
-  }    
+  }
 }
